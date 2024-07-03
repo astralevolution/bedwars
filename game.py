@@ -1,4 +1,5 @@
 import time
+import random
 
 iron = 0
 hp = 20
@@ -58,22 +59,100 @@ def merchant():
     for item in merchantitems:
         print(item)
         time.sleep(0.25)
-    while True:
-        try:
-            buyitem = input("Would you like to buy anything? Y/N: ")
-            if buyitem.lower() == 'y':
-                buy = input("What would you like to buy? Put the full name of the item. (Case Sensitive): ")
-                merchantitems.remove(buy)
-                youritems.append(buy)
-                print(f"You have bought: {buy}")
-        except ValueError:
+    try:
+        buyitem = input("Would you like to buy anything? Y/N: ")
+        if buyitem.lower() == 'y':
+            buy = input("What would you like to buy? Put the full name of the item. (Case Sensitive): ")
+            merchantitems.remove(buy)
+            youritems.append(buy)
+            print(f"You have bought: {buy}")
+            nextMsg()
+            action = input()
+            nextAction(action.lower())
+
+        else:
+            nextMsg()
+            newaction = input()
+            nextAction(newaction.lower())
+
+    except ValueError:
             print("Sorry, but the item you want to buy is not available. Please check your spelling. (All items are case-sensitive)")
 
 def pvp():
-    print("Lets PVP!")
+    opponent_sword = random.randint(1,3)
+    opponent_armor = random.randint(1,3)
+    if opponent_sword == 1:
+        opponent_sword = "stone"
+    elif opponent_sword == 2:
+        opponent_sword = "iron"
+    elif opponent_sword == 3:
+        opponent_sword = "diamond"
+    if opponent_armor == 1:
+        opponent_armor = "stone"
+    elif opponent_armor == 2:
+        opponent_armor = "iron"
+    elif opponent_armor == 3:
+        opponent_armor = "diamond"
+    num = random.randint(1,10)
+    if num == 5 or num == 6 or num == 7 or num == 8:
+        global hp
+        hp - 10
+        if hp < 0:
+            print("You died! Game over.")
+            exit()
+        anum = random.randint(1,10)
+        if anum > 8:
+            print("You killed your opponent!")
+            nextMsg()
+            action = input()
+            nextAction(action.lower())
+        elif anum == 5 or anum == 6 or anum == 7 or anum == 8:
+            print("You died! Game Over.")
+            exit()
+        else:
+            print("You killed your opponent!")
+            nextMsg()
+            action = input()
+            nextAction(action.lower())
+    else:
+        print("You killed your opponent!")
+        nextMsg()
+        action = input()
+        nextAction(action.lower())
 
+    
 def breakbed():
-    print("Lets go break a bed!")
+    bednum = random.randint(1,10)
+    if bednum < 6:
+        num = random.randint(1,10)
+        if num == 5 or num == 6 or num == 7 or num == 8:
+            global hp
+            hp - 10
+            if hp < 0:
+                print("You died! Game over.")
+                exit()
+            anum = random.randint(1,10)
+            if anum > 8:
+                print("You killed your opponent and got their bed!")
+                nextMsg()
+                action = input()
+                nextAction(action.lower())
+            elif anum == 5 or anum == 6 or anum == 7 or anum == 8:
+                print("You died! Game Over.")
+                exit()
+            else:
+                print("You killed your opponent!")
+                nextMsg()
+                action = input()
+                nextAction(action.lower())
+        else:
+            print("You killed your opponent and got their bed!")
+            nextMsg()
+            action = input()
+            nextAction(action.lower())
+    else:
+        print("You lost and died! Game over.")
+        exit()
 
 def generator():
     global iron
